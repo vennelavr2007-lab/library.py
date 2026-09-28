@@ -1,0 +1,89 @@
+FILE = "books.txt"
+def add_book():
+    book = input("Enter book name: ")
+    with open(FILE, "a") as f:
+        f.write(book + "|Available\n")
+    print("Book added successfully.")
+def show_books():
+    try:
+        with open(FILE) as f:
+            print("\n--- BOOK LIST ---")
+            for x in f:
+                book, status = x.strip().split("|")
+                print(book, "-", status)
+    except FileNotFoundError:
+        print("No books found.")
+def update_book(book, status):
+    try:
+        with open(FILE) as f:
+            books = [x.strip().split("|") for x in f]
+        for x in books:
+            if x[0].lower() == book.lower():
+                x[1] = status
+                with open(FILE, "w") as f:
+                    for b in books:
+                        f.write("|".join(b) + "\n")
+                print("Book updated successfully.")
+                return
+        print("Book not found.")
+    except FileNotFoundError:
+        print("No books found.")
+while True:
+    print("\n LIBRARY MANAGEMENT ")
+    print("1. Add Book")
+    print("2. Display Books")
+    print("3. Issue Book")
+    print("4. Return Book")
+    print("5. Exit")
+    ch = input("Enter choice: ")
+    if ch == "1":
+        add_book()
+    elif ch == "2":
+        show_books()
+    elif ch == "3":
+        update_book(input("Enter book name: "), "Issued")
+    elif ch == "4":
+        update_book(input("Enter book name: "), "Available")
+    elif ch == "5":
+        print("Thank you!")
+        break
+    else:
+        print("Invalid choice.")
+
+OUTPUT:
+===== LIBRARY MANAGEMENT =====
+1. Add Book
+2. Display Books
+3. Issue Book
+4. Return Book
+5. Exit
+Enter choice: 2
+No books found.
+===== LIBRARY MANAGEMENT =====
+1. Add Book
+2. Display Books
+3. Issue Book
+4. Return Book
+5. Exit
+Enter choice: 3
+Enter book name: JAVA
+No books found.
+===== LIBRARY MANAGEMENT =====
+1. Add Book
+2. Display Books
+3. Issue Book
+4. Return Book
+5. Exit
+Enter choice: 4
+Enter book name: PYTHON
+No books found.
+===== LIBRARY MANAGEMENT =====
+1. Add Book
+2. Display Books
+3. Issue Book
+4. Return Book
+5. Exit
+Enter choice: 5
+Thank you!
+
+
